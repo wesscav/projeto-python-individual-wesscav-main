@@ -34,6 +34,8 @@ pip install windows-curses
 
 Pronto! Agora você pode seguir os passos da seção ["Como jogar"](#como-jogar) para executar o jogo.
 
+Devido ao tamanho da rainha, quando ela chega perto dos corações ou do jogador, a cor dela muda um pouco!
+
 Para uma melhor experiência, jogue em tela cheia!
 ## Outros links
 
