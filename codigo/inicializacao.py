@@ -110,7 +110,9 @@ def inicializa_estado():
     objetos += gera_objetos(5, MONSTRO2, BRANCO, largura_mapa, altura_mapa, posicoes_ocupadas)
     
     return {
-        'tela_atual': TELA_JOGO,
+        'tela_atual': INICIO,
+        'tecla' : ' ',
+        'posicoes_ocupadas' : posicoes_ocupadas,
         'pos_jogador': pos_jogador, 
         'vidas': 5,  
         'max_vidas': 5,  

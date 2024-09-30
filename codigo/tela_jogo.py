@@ -4,33 +4,50 @@ import random
 
 def desenha_tela(janela, estado, altura_tela, largura_tela):
     
-    x0 = (largura_tela-len(estado['mapa'][0]))//2
-    y0 = (altura_tela-len(estado['mapa']))//2
     motor.preenche_fundo(janela, PRETO)
 
-    for largura_mapa in range(len(estado['mapa'][0])):
-        for altura_mapa in range(len(estado['mapa'])):
-            motor.desenha_string(janela, largura_mapa + x0, altura_mapa + y0,' ', VERDE_ESCURO, PRETO)
-    motor.desenha_string(janela, estado['pos_jogador'][0] + x0, estado['pos_jogador'][1] + y0, JOGADOR, VERDE_ESCURO, PRETO)
-    for objeto in estado['objetos']:
-        motor.desenha_string(janela, objeto['posicao'][0] + x0, objeto['posicao'][1]+ y0, objeto['tipo'], VERDE_ESCURO, objeto['cor'])
-        if objeto['tipo'] == PAREDE: 
-            motor.desenha_string(janela, objeto['posicao'][0] + x0, objeto['posicao'][1]+ y0, objeto['tipo'], MARROM_MAIS_ESCURO, objeto['cor'])
+    if estado['tecla'] != ' ':
+        x0 = (largura_tela-len(estado['mapa'][0]))//2
+        y0 = (altura_tela-len(estado['mapa']))//2
+       
+        for largura_mapa in range(len(estado['mapa'][0])):
+            for altura_mapa in range(len(estado['mapa'])):
+                motor.desenha_string(janela, largura_mapa + x0, altura_mapa + y0,' ', VERDE_ESCURO, PRETO)
+        for objeto in estado['objetos']:
+            motor.desenha_string(janela, objeto['posicao'][0] + x0, objeto['posicao'][1]+ y0, objeto['tipo'], VERDE_ESCURO, objeto['cor'])
+            if objeto['tipo'] == PAREDE: 
+                motor.desenha_string(janela, objeto['posicao'][0] + x0, objeto['posicao'][1]+ y0, objeto['tipo'], MARROM_MAIS_ESCURO, objeto['cor'])
+        motor.desenha_string(janela, estado['pos_jogador'][0] + x0, estado['pos_jogador'][1] + y0, JOGADOR, VERDE_ESCURO, PRETO)
 
+        
+        motor.desenha_string(janela, 0, 0, f'{CORACAO_BRANCO} '*estado['max_vidas'], PRETO, BRANCO)   
+        motor.desenha_string(janela, 0, 0, f'{CORACAO} '*estado['vidas'], PRETO, VERMELHO)
+        
+        if estado['nível'] == 1:
+            motor.desenha_string(janela, 0, 2, EXPERIENCIA_VAZIA*2, PRETO, PRETO)
+            motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['inimigos_mortos'], PRETO, PRETO)
+        if estado['nível'] == 2:
+            motor.desenha_string(janela,0 , 2,EXPERIENCIA_VAZIA*3, PRETO, PRETO)
+            motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['experiência'], PRETO, PRETO)
+        if estado['nível'] == 3:
+            motor.desenha_string(janela, 0, 2,EXPERIENCIA_VAZIA*5, PRETO, PRETO)
+            motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['experiência'], PRETO, PRETO)
+        motor.desenha_string(janela, 0, 10, estado['mensagem'], PRETO, BRANCO)
+    else:
+        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 , 'CHESS 2.0', BRANCO, PRETO)
+        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 1, 'ACOMPANHE A ASCENSAO DO PEÃO PARA DERROTAR O REI', BRANCO, PRETO)
+        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'PARA ACESSAR O TUTORIAL, APERTE "t"', BRANCO, PRETO)
+        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'APERTE "v" PARA JOGAR', BRANCO, PRETO)
+        if estado['tecla'] == 'v':
+            pass
+        elif estado['tecla'] == 't':
+            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 , 'BEM VINDO AO TUTORIAL', BRANCO, PRETO)
+            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 1, 'NO MAPA, HÁ CORAÇÕES, ESPINHOS E PEÇAS INIMIGAS', BRANCO, PRETO)
+            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'AO DERROTAR CADA MONSTRO, GANHA-SE EXPERIÊNCIA', BRANCO, PRETO)
+            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 3, 'QUANTO MAIOR SEU NÍVEL, MAIS FORTE FICA', BRANCO, PRETO)
+            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 4, 'O REI TE ESPERA NO SALÃO PRINCIPAL, DERROTE-O!', BRANCO, PRETO)
     
-    motor.desenha_string(janela, 0, 0, f'{CORACAO_BRANCO} '*estado['max_vidas'], PRETO, BRANCO)   
-    motor.desenha_string(janela, 0, 0, f'{CORACAO} '*estado['vidas'], PRETO, VERMELHO)
     
-    if estado['nível'] == 1:
-        motor.desenha_string(janela, 0, 2, EXPERIENCIA_VAZIA*2, PRETO, PRETO)
-        motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['inimigos_mortos'], PRETO, PRETO)
-    if estado['nível'] == 2:
-        motor.desenha_string(janela,0 , 2,EXPERIENCIA_VAZIA*3, PRETO, PRETO)
-        motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['experiência'], PRETO, PRETO)
-    if estado['nível'] == 3:
-        motor.desenha_string(janela, 0, 2,EXPERIENCIA_VAZIA*5, PRETO, PRETO)
-        motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['experiência'], PRETO, PRETO)
-    motor.desenha_string(janela, 0, 10, estado['mensagem'], PRETO, BRANCO)
     motor.mostra_janela(janela)
 
 posições_aleatórias = {'cima': 1, 'baixo': 2, 'esquerda': 3, 'direita': 4}
@@ -74,6 +91,8 @@ def posição_futura_jogador(estado, tecla):
     return posicao_futura
 
 def atualiza_estado(estado, tecla):
+    
+    estado['tecla'] = tecla
     estado['mensagem'] = ''
     bateu_monstro = False
     if estado['vidas'] > 0:
@@ -109,15 +128,16 @@ def atualiza_estado(estado, tecla):
         estado['mensagem'] = 'Você morreu, tente novamente!! Aperte ESC para jogar novamente!'
 
     #análise jogo para objetos!!
+    posição_futura = posição_futura_jogador(estado, tecla)
 
     for objeto in estado['objetos']:
         if objeto['tipo'] == ESPINHO:
-            if objeto['posicao'] == [estado['pos_jogador'][0], estado['pos_jogador'][1]]:
+            if objeto['posicao'] == posição_futura:
                 estado['vidas'] -= 1
-                estado['mensagem'] = 'Você tomou dano!'
+                estado['mensagem'] = 'O espinho te engoliu, saia!!'
 
         elif objeto['tipo'] == CORACAO:
-            if objeto['posicao'] == [estado['pos_jogador'][0], estado['pos_jogador'][1]]:
+            if objeto['posicao'] == posição_futura:
                 estado['objetos'].remove(objeto)
                 if estado['vidas'] == estado['max_vidas']:
                     estado['mensagem'] = 'Você chegou na vida máxima!'
@@ -126,26 +146,27 @@ def atualiza_estado(estado, tecla):
                     
         elif objeto['tipo'] == MONSTRO:
             if estado['vidas'] > 0:
+                    
                 posicao_futura_mostro = objeto['posicao'][:]
                 direção = random.randint(1,4)
                 if posições_aleatórias['baixo'] == direção and objeto['posicao'][1] < 23:
                     posicao_futura_mostro[1] += 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[1] -= 1
 
                 elif posições_aleatórias['cima'] == direção and objeto['posicao'][1] > 2:
                     posicao_futura_mostro[1] -= 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[1] += 1
 
                 elif posições_aleatórias['direita'] == direção and objeto['posicao'][0] < 68:
                     posicao_futura_mostro[0] += 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[0] -= 1
 
-                elif posições_aleatórias['esquerda'] == direção and objeto['posicao'][0] > 2:
+                elif posições_aleatórias['esquerda'] == direção and objeto['posicao'][0] > 2 and objeto['posicao']:
                     posicao_futura_mostro[0] -= 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[0] += 1
 
                 objeto['posicao'] = posicao_futura_mostro
@@ -185,19 +206,20 @@ def atualiza_estado(estado, tecla):
                 direção = random.randint(1,4)
                 if posições_aleatórias['baixo'] == direção:
                     posicao_futura_mostro[1] += 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[1] -= 1
+
                 elif posições_aleatórias['cima'] == direção:
                     posicao_futura_mostro[1] -= 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[1] += 1
                 elif posições_aleatórias['direita'] == direção:
                     posicao_futura_mostro[0] += 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[0] -= 1
                 elif posições_aleatórias['esquerda'] == direção:
                     posicao_futura_mostro[0] -= 1
-                    if posicao_futura_mostro in posicao_paredes:
+                    if posicao_futura_mostro in posicao_paredes or posicao_futura_mostro in estado['posicoes_ocupadas']:
                         posicao_futura_mostro[0] += 1
 
                 objeto['posicao'] = posicao_futura_mostro
