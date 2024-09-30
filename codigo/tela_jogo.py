@@ -5,8 +5,12 @@ import random
 def desenha_tela(janela, estado, altura_tela, largura_tela):
     
     motor.preenche_fundo(janela, PRETO)
+    motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 , 'CHESS 2.0', BRANCO, PRETO)
+    motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 1, 'ACOMPANHE A ASCENSAO DO PEÃO PARA DERROTAR O REI', BRANCO, PRETO)
+    motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'PARA ACESSAR O TUTORIAL, APERTE "t"', BRANCO, PRETO)
+    motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'APERTE "v" PARA JOGAR', BRANCO, PRETO)
 
-    if estado['tecla'] != ' ':
+    if estado['tecla'] != ' ' or estado['tecla'] == 'v':
         x0 = (largura_tela-len(estado['mapa'][0]))//2
         y0 = (altura_tela-len(estado['mapa']))//2
        
@@ -33,20 +37,13 @@ def desenha_tela(janela, estado, altura_tela, largura_tela):
             motor.desenha_string(janela, 0, 2,EXPERIENCIA_VAZIA*5, PRETO, PRETO)
             motor.desenha_string(janela, 0, 2, EXPERIENCIA_CHEIA*estado['experiência'], PRETO, PRETO)
         motor.desenha_string(janela, 0, 10, estado['mensagem'], PRETO, BRANCO)
-    else:
-        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 , 'CHESS 2.0', BRANCO, PRETO)
-        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 1, 'ACOMPANHE A ASCENSAO DO PEÃO PARA DERROTAR O REI', BRANCO, PRETO)
-        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'PARA ACESSAR O TUTORIAL, APERTE "t"', BRANCO, PRETO)
-        motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'APERTE "v" PARA JOGAR', BRANCO, PRETO)
-        if estado['tecla'] == 'v':
-            pass
-        elif estado['tecla'] == 't':
-            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 , 'BEM VINDO AO TUTORIAL', BRANCO, PRETO)
-            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 1, 'NO MAPA, HÁ CORAÇÕES, ESPINHOS E PEÇAS INIMIGAS', BRANCO, PRETO)
-            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 2, 'AO DERROTAR CADA MONSTRO, GANHA-SE EXPERIÊNCIA', BRANCO, PRETO)
-            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 3, 'QUANTO MAIOR SEU NÍVEL, MAIS FORTE FICA', BRANCO, PRETO)
-            motor.desenha_string(janela, (largura_tela-len(estado['mapa'][0]))//2,(altura_tela-len(estado['mapa']))//2 + 4, 'O REI TE ESPERA NO SALÃO PRINCIPAL, DERROTE-O!', BRANCO, PRETO)
-    
+
+    if estado['tecla'] == 't':
+        motor.desenha_string(janela, 0,5, 'BEM VINDO AO TUTORIAL', BRANCO, PRETO)
+        motor.desenha_string(janela, 0,6, 'NO MAPA, HÁ CORAÇÕES, ESPINHOS E PEÇAS INIMIGAS', BRANCO, PRETO)
+        motor.desenha_string(janela, 0,7, 'AO DERROTAR CADA MONSTRO, GANHA-SE EXPERIÊNCIA', BRANCO, PRETO)
+        motor.desenha_string(janela, 0,8, 'QUANTO MAIOR SEU NÍVEL, MAIS FORTE FICA', BRANCO, PRETO)
+        
     
     motor.mostra_janela(janela)
 
